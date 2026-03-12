@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Información de Red - HELIOSLINK</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="panel-layout.css">
+    <link rel="stylesheet" href="informacion-red.css">
+</head>
+
+<body class="panel-body">
+
+    <!-- HEADER -->
+    <header class="panel-header">
+        <div class="header-left">
+            <button class="menu-btn" type="button" aria-label="Menú" id="menuBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <a href="panel-principal.html" class="header-logo">Logo</a>
+        </div>
+        <h1 class="panel-title">INFORMACIÓN DE RED</h1>
+        <div class="header-right">
+            <span class="header-user">@USUARIO</span>
+            <a href="index.html" class="logout-btn" id="logoutBtn">Logout</a>
+        </div>
+    </header>
+
+    <!-- MENÚ LATERAL -->
+    <div class="panel-overlay" id="panelOverlay"></div>
+    <aside class="panel-sidebar" id="panelSidebar">
+        <nav>
+            <ul class="panel-nav">
+                <li><a href="panel-principal.html">Panel Principal</a></li>
+                <li><a href="graficas-informacion.html">Gráficas e Información</a></li>
+                <li><a href="graficas-historicas.html">Gráficas Históricas</a></li>
+                <li><a href="reportes.html">Reportes</a></li>
+                <li><a href="informacion-red.html">Información de Red</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="red-main">
+        <div class="red-grid">
+            <section class="red-card" data-dispositivo="1">
+                <h2 class="red-card-title">Dispositivo 1</h2>
+                <label class="red-label">IP Address</label>
+                <div class="red-field" id="disp1-ip"><!-- Cargar datos aquí --></div>
+                <label class="red-label">MAC Address</label>
+                <div class="red-field" id="disp1-mac"><!-- Cargar datos aquí --></div>
+                <label class="red-label">Tipo</label>
+                <div class="red-field" id="disp1-tipo"><!-- Cargar datos aquí --></div>
+            </section>
+            <section class="red-card" data-dispositivo="2">
+                <h2 class="red-card-title">Dispositivo 2</h2>
+                <label class="red-label">IP Address</label>
+                <div class="red-field" id="disp2-ip"><!-- Cargar datos aquí --></div>
+                <label class="red-label">MAC Address</label>
+                <div class="red-field" id="disp2-mac"><!-- Cargar datos aquí --></div>
+                <label class="red-label">Tipo</label>
+                <div class="red-field" id="disp2-tipo"><!-- Cargar datos aquí --></div>
+            </section>
+            <section class="red-card" data-dispositivo="3">
+                <h2 class="red-card-title">Dispositivo 3</h2>
+                <label class="red-label">IP Address</label>
+                <div class="red-field" id="disp3-ip"><!-- Cargar datos aquí --></div>
+                <label class="red-label">MAC Address</label>
+                <div class="red-field" id="disp3-mac"><!-- Cargar datos aquí --></div>
+                <label class="red-label">Tipo</label>
+                <div class="red-field" id="disp3-tipo"><!-- Cargar datos aquí --></div>
+            </section>
+            <section class="red-card" data-dispositivo="4">
+                <h2 class="red-card-title">Dispositivo 4</h2>
+                <label class="red-label">IP Address</label>
+                <div class="red-field" id="disp4-ip"><!-- Cargar datos aquí --></div>
+                <label class="red-label">MAC Address</label>
+                <div class="red-field" id="disp4-mac"><!-- Cargar datos aquí --></div>
+                <label class="red-label">Tipo</label>
+                <div class="red-field" id="disp4-tipo"><!-- Cargar datos aquí --></div>
+            </section>
+        </div>
+    </main>
+
+    <script src="panel-common.js"></script>
+</body>
+
+</html>

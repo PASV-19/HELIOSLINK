@@ -1,0 +1,89 @@
+<nav class="navbar navbar-dark px-4 helios-navbar">
+
+    <!-- LEFT SIDE -->
+    <div class="d-flex align-items-center">
+        <!-- sidebar toggle -->
+        <button class="btn btn-link text-white me-3 p-0"
+                type="button"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#heliosSidebar"
+                aria-label="Menu">
+
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- logo -->
+        <img src="{% static 'images/logo.png' %}" width="40" class="me-2">
+    </div>
+
+    <!-- PAGE TITLE -->
+    <span class="navbar-text text-white fw-semibold">
+        {{ page_name }}
+    </span>
+
+    <!-- RIGHT SIDE -->
+    <div class="d-flex align-items-center">
+        <span class="text-white me-3">
+            {{ request.user.username }}
+        </span>
+
+        <a href="{% url 'logout' %}" class="btn logout-btn">
+            Logout
+        </a>
+    </div>
+</nav>
+
+
+<!-- SIDEBAR -->
+<div class="offcanvas offcanvas-start text-bg-dark"
+     tabindex="-1"
+     id="heliosSidebar">
+
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title">Menu</h5>
+        <button type="button"
+                class="btn-close btn-close-white"
+                data-bs-dismiss="offcanvas">
+        </button>
+    </div>
+
+    <div class="offcanvas-body p-0">
+        <ul class="nav flex-column panel-nav">
+            <li class="nav-item">
+                <a class="nav-link text-white" href="{% url 'dashboard' %}">
+                    Panel Principal
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link text-white" href="{% url 'graficas_info' %}">
+                    Gráficas e Información
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link text-white" href="{% url 'graficas_hist' %}">
+                    Gráficas Históricas
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link text-white" href="{% url 'network_info' %}">
+                    Información de Red
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link text-white" href="{% url 'reportes' %}">
+                    Reportes
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link text-white" href="{% url 'reportes' %}">
+                    Información de Usuario
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reportes - HELIOSLINK</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="panel-layout.css">
+    <link rel="stylesheet" href="reportes.css">
+</head>
+
+<body class="panel-body">
+
+    <!-- HEADER -->
+    <header class="panel-header">
+        <div class="header-left">
+            <button class="menu-btn" type="button" aria-label="Menú" id="menuBtn">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <a href="panel-principal.html" class="header-logo">Logo</a>
+        </div>
+        <h1 class="panel-title">REPORTES</h1>
+        <div class="header-right">
+            <span class="header-user">@USUARIO</span>
+            <a href="index.html" class="logout-btn" id="logoutBtn">Logout</a>
+        </div>
+    </header>
+
+    <!-- MENÚ LATERAL -->
+    <div class="panel-overlay" id="panelOverlay"></div>
+    <aside class="panel-sidebar" id="panelSidebar">
+        <nav>
+            <ul class="panel-nav">
+                <li><a href="panel-principal.html">Panel Principal</a></li>
+                <li><a href="graficas-informacion.html">Gráficas e Información</a></li>
+                <li><a href="graficas-historicas.html">Gráficas Históricas</a></li>
+                <li><a href="reportes.html">Reportes</a></li>
+                <li><a href="informacion-red.html">Información de Red</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="reportes-main">
+        <section class="reportes-form-box">
+            <form class="reportes-form">
+                <label class="reportes-label">Nombre de quien genera:</label>
+                <input type="text" class="reportes-input" placeholder="Ingresa el nombre" id="reporteGenerador">
+
+                <label class="reportes-label reportes-label--section">Gráficos a incluir:</label>
+                <div class="reportes-checkboxes">
+                    <label class="reportes-check-item">
+                        <input type="checkbox" name="graficos" value="produccion-consumo">
+                        <span>Producción y consumo</span>
+                    </label>
+                    <label class="reportes-check-item">
+                        <input type="checkbox" name="graficos" value="tiempo-exposicion">
+                        <span>Tiempo de exposición</span>
+                    </label>
+                    <label class="reportes-check-item">
+                        <input type="checkbox" name="graficos" value="estado-panel">
+                        <span>Estado del panel</span>
+                    </label>
+                    <label class="reportes-check-item">
+                        <input type="checkbox" name="graficos" value="dispositivos-conectados">
+                        <span>Dispositivos conectados</span>
+                    </label>
+                </div>
+
+                <button type="button" class="reportes-exportar-btn" id="btnExportar">EXPORTAR</button>
+            </form>
+        </section>
+    </main>
+
+    <script src="panel-common.js"></script>
+</body>
+
+</html>

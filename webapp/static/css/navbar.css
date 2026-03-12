@@ -1,0 +1,27 @@
+/* HELIOS navbar style */
+.helios-navbar{
+    background:#0a1f44;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}
+
+.logout-btn{
+    padding:8px 18px;
+    background:linear-gradient(90deg,#ff6a00,#ffb300);
+    color:white;
+    border-radius:8px;
+    font-weight:600;
+    border:none;
+}
+
+.logout-btn:hover{
+    opacity:0.9;
+    color:white;
+}
+
+.panel-nav .nav-link{
+    padding:14px 24px;
+}
+
+.panel-nav .nav-link:hover{
+    background:rgba(255,255,255,0.08);
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráficas e Información - HELIOSLINK</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/base_styles.css"> 
+    <link rel="stylesheet" href="../static/css/navbar.css">
+</head>
+
+<body class="panel-body">
+    {% include "navbar.html" %}
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="graficas-main">
+        <!-- COLUMNA IZQUIERDA: Conjuntos -->
+        <section class="graficas-sidebar">
+            <div class="info-card">
+                <span class="info-card-value">90°</span>
+                <span class="info-card-label">Conjunto 1</span>
+                <span class="card-badge card-badge--cargando">Cargando</span>
+            </div>
+            <div class="info-card">
+                <span class="info-card-value">2:35 hrs</span>
+                <span class="info-card-label">Conjunto 1</span>
+            </div>
+        </section>
+
+        <!-- COLUMNA DERECHA: Representación y gráfica -->
+        <section class="graficas-content">
+            <div class="content-block">
+                <h2 class="content-block-title">Representación</h2>
+                <div class="representacion-diagram"></div>
+            </div>
+            <div class="content-block">
+                <h2 class="content-block-title">Tiempo de Exposición</h2>
+                <p class="content-block-sub">Tiempo</p>
+                <div class="exposicion-chart"></div>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
