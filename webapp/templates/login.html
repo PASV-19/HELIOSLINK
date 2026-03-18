@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 
@@ -5,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HELIOSLINK</title>
-    <link rel="stylesheet" href="../static/css/log_styles.css">
+    <link rel="stylesheet" href="{% static 'css/login_styles.css' %}">
 </head>
 
 <body>
@@ -20,7 +21,7 @@
             <!-- AREA DEL LOGO -->
             <div class="logo-area">
 
-                <img src="../static/images/logo.png" alt="Logo HELIOSLINK" class="logo">
+                <img src="{% static 'images/logo.png' %}" alt="Logo HELIOSLINK" class="logo">
 
             </div>
 
@@ -29,12 +30,17 @@
             <div class="login-box">
 
                 <form method="post">
+                    {% csrf_token %}
 
-                    <label>Correo:</label>
-                    <input type="email" placeholder="Ingresa tu correo" name="correo" required>
+                    {% if error %}
+                    <p class="login-error">{{ error }}</p>
+                    {% endif %}
+
+                    <label>Nombre de Usuario:</label>
+                    <input type="text" placeholder="Ingresa tu correo" name="username" required>
 
                     <label>Contraseña:</label>
-                    <input type="password" placeholder="Ingresa tu contraseña" name="pass" required>
+                    <input type="password" placeholder="Ingresa tu contraseña" name="password" required>
 
                     <button class="login-btn" type="submit">Iniciar sesión</button>
 
