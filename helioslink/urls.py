@@ -17,7 +17,22 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path
+from webapp import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+
+    #Login/Users related
+    path('', views.login_view, name='login'),
+    path('crear-cuenta/', views.crear_cuenta, name='crear_cuenta'),
+    path('restablecer', views.restablecer, name='restablecer'),
+
+    #Real time page / ESP32 redirection
+    #path('panel-principal', views.panel_principal, name='panel_principal'),
+
+    #Informative pages / non real-time data
+    path('graf-info/', views.graf_info, name='graf_info'),
+	path('reportes/', views.reportes, name='reportes'),
+	path('user-info/', views.user_info, name='user_info'),
+	path('informacion-red/', views.informacion_red, name='informacion_red'),
 ]

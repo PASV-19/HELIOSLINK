@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear cuenta - HELIOSLINK</title>
-    <link rel="stylesheet" href="../static/css/log_styles.css">
+    <link rel="stylesheet" href="{% static 'css/base_styles.css' %}">
 </head>
 
 <body>
@@ -17,7 +17,7 @@
         <div class="hero-content">
 
             <div class="logo-area">
-                <img src="../static/images/logo.png" class="logo">
+                <img src="{% static 'images/logo.png' %}" class="logo">
             </div>
 
             <div class="login-box">
@@ -25,30 +25,31 @@
                 <h2>Crear cuenta</h2>
 
                 <form method="post">
+                    {% csrf_token %}
 
                     <label>Nombre</label>
-                    <input type="text" placeholder="Nombre completo" name="name_usr">
+                    <input type="text" placeholder="Nombre completo" name="username" required>
 
                     <label>Correo</label>
-                    <input type="email" placeholder="Correo electrónico" name="email_usr">
+                    <input type="email" placeholder="Correo electrónico" name="email" required>
 
                     <label>Contraseña</label>
-                    <input type="password" placeholder="Crear contraseña" name="pass_usr">
+                    <input type="password" placeholder="Crear contraseña" name="password" required>
 
                     <label>Nombre de la Organización</label>
-                    <input type="text" placeholder="Nombre de la Organización" name="name_org">
+                    <input type="text" placeholder="Nombre de la Organización" name="name_org" required>
                     <label>Ubicación de la Organización</label>
-                    <input type="text" placeholder="Dirección" name="ubica_org">
+                    <input type="text" placeholder="Dirección" name="ubica_org" required>
 
                     <label>Teléfono de la Organización</label>
-                    <input type="tel" placeholder="Teléfono" name="tel">
+                    <input type="tel" placeholder="Teléfono" name="tel" required>
 
                     <button class="login-btn" type="submit">
                         Crear cuenta
                     </button>
 
                     <p class="extra-links">
-                        ¿Ya tienes cuenta? <a href="">Iniciar sesión</a>
+                    ¿Ya tienes cuenta? <a href="{% url 'login' %}">Iniciar sesión</a>
                     </p>
 
                 </form>

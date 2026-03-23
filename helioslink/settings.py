@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+from os import wait
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,7 +26,7 @@ SECRET_KEY = "django-insecure-5#kakgy9x+&*g+5!n&@$-b_72^e^v8a1(tisn5sw%hjico!hv&
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -77,9 +78,9 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
         "NAME": "helios_db",       # your database name
-        "USER": "root",                # your MySQL user
-        "PASSWORD": "",   # your MySQL password
-        "HOST": "localhost",           # or 127.0.0.1
+        "USER": "myuser",                # your MySQL user
+        "PASSWORD": "mypassword",   # your MySQL password
+        "HOST": "localhost",
         "PORT": "3306",
         "OPTIONS": {
             "charset": "utf8mb4",
