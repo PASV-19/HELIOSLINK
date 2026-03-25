@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear cuenta - HELIOSLINK</title>
-    <link rel="stylesheet" href="{% static 'css/base_styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/login_styles.css' %}">
 </head>
 
 <body>
@@ -27,6 +27,12 @@
 
                 <form method="post">
                     {% csrf_token %}
+                    
+                    {% if messages %}
+                        {% for message in messages %}
+                            <p class="crear-cuenta-error">{{ message }}</p>
+                        {% endfor %}
+                    {% endif %}
 
                     <label>Nombre</label>
                     <input type="text" placeholder="Nombre completo" name="username" required>

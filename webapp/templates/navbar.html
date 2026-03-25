@@ -1,89 +1,84 @@
-<nav class="navbar navbar-dark px-4 helios-navbar">
+{% load static %}
 
-    <!-- LEFT SIDE -->
-    <div class="d-flex align-items-center">
-        <!-- sidebar toggle -->
-        <button class="btn btn-link text-white me-3 p-0"
-                type="button"
-                data-bs-toggle="offcanvas"
-                data-bs-target="#heliosSidebar"
-                aria-label="Menu">
+<header class="panel-header">
 
-            <span class="navbar-toggler-icon"></span>
-        </button>
+	<!-- LEFT -->
+	<div class="header-left">
+		<button class="menu-btn" id="menuBtn" aria-label="Menú">
+			<span></span>
+			<span></span>
+			<span></span>
+		</button>
 
-        <!-- logo -->
-        <img src="{% static 'images/logo.png' %}" width="40" class="me-2">
-    </div>
+        <img src="{% static 'images/logo.png' %}" alt="Logo HELIOSLINK" class="header-logo">
+	</div>
 
-    <!-- PAGE TITLE -->
-    <span class="navbar-text text-white fw-semibold">
-        {{ page_name }}
-    </span>
+	<!-- CENTER -->
+	<h1 class="panel-title">
+		{{ page_name }}
+	</h1>
 
-    <!-- RIGHT SIDE -->
-    <div class="d-flex align-items-center">
-        <span class="text-white me-3">
-            {{ request.user.username }}
-        </span>
+	<!-- RIGHT -->
+	<div class="header-right">
+		<span class="header-user">
+			{{ request.user.username }}
+		</span>
 
-        <a href="{% url 'logout' %}" class="btn logout-btn">
-            Logout
-        </a>
-    </div>
-</nav>
+		<a href="" class="logout-btn">
+			Logout
+		</a>
+	</div>
 
+</header>
+
+
+<!-- OVERLAY -->
+<div class="panel-overlay" id="panelOverlay"></div>
 
 <!-- SIDEBAR -->
-<div class="offcanvas offcanvas-start text-bg-dark"
-     tabindex="-1"
-     id="heliosSidebar">
+<aside class="panel-sidebar" id="panelSidebar">
+	<nav>
+		<ul class="panel-nav">
 
-    <div class="offcanvas-header">
-        <h5 class="offcanvas-title">Menu</h5>
-        <button type="button"
-                class="btn-close btn-close-white"
-                data-bs-dismiss="offcanvas">
-        </button>
-    </div>
-
-    <div class="offcanvas-body p-0">
-        <ul class="nav flex-column panel-nav">
-            <li class="nav-item">
-                <a class="nav-link text-white" href="{% url 'dashboard' %}">
-                    Panel Principal
-                </a>
+			<li>
+                <a href="{% url 'dashboard' %}">Panel Principal</a>
+			</li>
+			<li>
+				<a href="{% url 'graf_info' %}">Gráficas e Información</a>
+			</li>
+			<li>
+				<a href="{% url 'graf_hist' %}">Gráficas Históricas</a>
+			</li>
+			<li>
+				<a href="{% url 'reportes' %}">Reportes</a>
+			</li>
+            <li>
+                <a href="{% url 'user_info' %}">Información del Usuario</a>
             </li>
+			<li>
+				<a href="{% url 'net_info' %}">Información de Red</a>
+			</li>
 
-            <li class="nav-item">
-                <a class="nav-link text-white" href="{% url 'graficas_info' %}">
-                    Gráficas e Información
-                </a>
-            </li>
+		</ul>
+	</nav>
+</aside>
 
-            <li class="nav-item">
-                <a class="nav-link text-white" href="{% url 'graficas_hist' %}">
-                    Gráficas Históricas
-                </a>
-            </li>
 
-            <li class="nav-item">
-                <a class="nav-link text-white" href="{% url 'network_info' %}">
-                    Información de Red
-                </a>
-            </li>
+<!-- SCRIPT (minimal, replaces panel-common.js logic) -->
+<script>
+const menuBtn = document.getElementById("menuBtn");
+const sidebar = document.getElementById("panelSidebar");
+const overlay = document.getElementById("panelOverlay");
 
-            <li class="nav-item">
-                <a class="nav-link text-white" href="{% url 'reportes' %}">
-                    Reportes
-                </a>
-            </li>
+menuBtn.addEventListener("click", () => {
+	sidebar.classList.toggle("is-open");
+	overlay.classList.toggle("is-open");
+	menuBtn.classList.toggle("is-open");
+});
 
-            <li class="nav-item">
-                <a class="nav-link text-white" href="{% url 'reportes' %}">
-                    Información de Usuario
-                </a>
-            </li>
-        </ul>
-    </div>
-</div>
+overlay.addEventListener("click", () => {
+	sidebar.classList.remove("is-open");
+	overlay.classList.remove("is-open");
+	menuBtn.classList.remove("is-open");
+});
+</script>

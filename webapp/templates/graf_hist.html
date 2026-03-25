@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="es">
 
@@ -5,43 +6,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gráficas Históricas - HELIOSLINK</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="panel-layout.css">
-    <link rel="stylesheet" href="graficas-historicas.css">
+    <link rel="stylesheet" href="{% static 'css/base_styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
 </head>
 
 <body class="panel-body">
-
-    <!-- HEADER -->
-    <header class="panel-header">
-        <div class="header-left">
-            <button class="menu-btn" type="button" aria-label="Menú" id="menuBtn">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <a href="panel-principal.html" class="header-logo">Logo</a>
-        </div>
-        <h1 class="panel-title">GRAFICAS HISTÓRICAS</h1>
-        <div class="header-right">
-            <span class="header-user">@USUARIO</span>
-            <a href="index.html" class="logout-btn" id="logoutBtn">Logout</a>
-        </div>
-    </header>
-    
-    <!-- MENÚ LATERAL -->
-    <div class="panel-overlay" id="panelOverlay"></div>
-    <aside class="panel-sidebar" id="panelSidebar">
-        <nav>
-            <ul class="panel-nav">
-                <li><a href="panel-principal.html">Panel Principal</a></li>
-                <li><a href="graficas-informacion.html">Gráficas e Información</a></li>
-                <li><a href="graficas-historicas.html">Gráficas Históricas</a></li>
-                <li><a href="reportes.html">Reportes</a></li>
-                <li><a href="informacion-red.html">Información de Red</a></li>
-            </ul>
-        </nav>
-    </aside>
+    {% include "navbar.html" %}
 
     <!-- CONTENIDO PRINCIPAL -->
     <main class="historicas-main">

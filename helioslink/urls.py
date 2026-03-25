@@ -28,11 +28,12 @@ urlpatterns = [
     path('restablecer', views.restablecer, name='restablecer'),
 
     #Real time page / ESP32 redirection
-    #path('panel-principal', views.panel_principal, name='panel_principal'),
+    path('dashboard', views.dashboard, name='dashboard'),
 
     #Informative pages / non real-time data
     path('graf-info/', views.graf_info, name='graf_info'),
-	path('reportes/', views.reportes, name='reportes'),
-	path('user-info/', views.user_info, name='user_info'),
-	path('informacion-red/', views.informacion_red, name='informacion_red'),
+    path('graf-hist/', views.graf_hist, name='graf_hist'),
+    path('reportes/', views.reportes, name='reportes'),
+    path('user-info/', views.user_info, name='user_info'),
+    path('net-info/', views.net_info, name='net_info'),
 ]

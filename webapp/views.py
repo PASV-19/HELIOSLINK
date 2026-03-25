@@ -73,10 +73,21 @@ def crear_cuenta(request):
             messages.error(request, f"Error al crear la cuenta: {str(e)}")
             return redirect("crear_cuenta")
 
-    return render(request, "crear-cuenta.html")
+    return render(request, "crear_cuenta.html")
 
+def restablecer(request):
+    return render(request, "restablecer.html")
+
+## Real time related / ESP32 redirection
+def dashboard(request):
+    return render(request, "dashboard.html")
+
+## Non real-time related / informative pages
 def graf_info(request):
     return render(request, "graf_info.html")
+
+def graf_hist(request):
+    return render(request, "graf_hist.html")
 
 def reportes(request):
     return render(request, "reportes.html")
@@ -84,8 +95,5 @@ def reportes(request):
 def user_info(request):
     return render(request, "user_info.html")
 
-def informacion_red(request):
-    return render(request, "informacion-red.html")
-
-def restablecer(request):
-    return render(request, "restablecer.html")
+def net_info(request):
+    return render(request, "net_info.html")

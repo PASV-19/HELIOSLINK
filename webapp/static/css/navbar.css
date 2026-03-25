@@ -1,27 +1,140 @@
-/* HELIOS navbar style */
-.helios-navbar{
-    background:#0a1f44;
-    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+/* ===== NAVBAR (HEADER) ===== */
+
+.panel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 24px;
+    background: #0a1f44;
+    color: white;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
-.logout-btn{
-    padding:8px 18px;
-    background:linear-gradient(90deg,#ff6a00,#ffb300);
-    color:white;
-    border-radius:8px;
-    font-weight:600;
-    border:none;
+/* LEFT */
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
-.logout-btn:hover{
-    opacity:0.9;
-    color:white;
+/* HAMBURGER BUTTON */
+.menu-btn {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
 }
 
-.panel-nav .nav-link{
-    padding:14px 24px;
+.menu-btn span {
+    width: 22px;
+    height: 3px;
+    background: white;
+    border-radius: 2px;
+    transition: 0.2s;
 }
 
-.panel-nav .nav-link:hover{
-    background:rgba(255,255,255,0.08);
+/* ANIMATION */
+.menu-btn.is-open span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+}
+.menu-btn.is-open span:nth-child(2) {
+    opacity: 0;
+}
+.menu-btn.is-open span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+}
+
+/* LOGO */
+.header-logo {
+    height: 40px;
+    width: auto;
+}
+
+/* CENTER TITLE */
+.panel-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+/* RIGHT */
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.header-user {
+    font-size: 0.95rem;
+}
+
+/* LOGOUT BUTTON */
+.logout-btn {
+    padding: 8px 18px;
+    background: linear-gradient(90deg, #ff6a00, #ffb300);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.logout-btn:hover {
+    opacity: 0.9;
+}
+
+
+/* ===== SIDEBAR ===== */
+
+.panel-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.25s;
+    z-index: 200;
+}
+
+.panel-overlay.is-open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.panel-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 260px;
+    height: 100vh;
+    background: #0a1f44;
+    transform: translateX(-100%);
+    transition: 0.25s;
+    z-index: 201;
+    padding-top: 60px;
+}
+
+.panel-sidebar.is-open {
+    transform: translateX(0);
+}
+
+/* NAV LINKS */
+.panel-nav {
+    list-style: none;
+}
+
+.panel-nav a {
+    display: block;
+    padding: 14px 24px;
+    color: rgba(255,255,255,0.9);
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+.panel-nav a:hover {
+    background: rgba(255,255,255,0.08);
+    color: white;
 }

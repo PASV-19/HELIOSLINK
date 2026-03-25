@@ -27,7 +27,7 @@ body {
     height: 100%;
 
     /* AQUI CAMBIAR POR TU IMAGEN */
-    background-image: url("images/background.png");
+    background-image: url("../images/background.png");
 
     background-size: cover;
     background-position: center;
