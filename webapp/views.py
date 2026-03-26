@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.db import transaction
 from django.contrib import messages
 
-from .models import Organizacion, Usuario #Import ORM for registration
+from .models import Organizacion, Usuario, Microcontrolador #Import ORM for registration
 from .services import (
     #Import for graf_info
     get_latest_angle,
