@@ -1,61 +1,37 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="es">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Información de Red - HELIOSLINK</title>
-    <link rel="stylesheet" href="{% static 'css/base_styles.css' %}">
-    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
-</head>
+{% block title %}Información de Dispositivos en la Red{% endblock %}
 
-<body class="panel-body">
-    {% include "navbar.html" %}
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
 
-    <!-- CONTENIDO PRINCIPAL -->
-    <main class="red-main">
-        <div class="red-grid">
-            <section class="red-card" data-dispositivo="1">
-                <h2 class="red-card-title">Dispositivo 1</h2>
-                <label class="red-label">IP Address</label>
-                <div class="red-field" id="disp1-ip"><!-- Cargar datos aquí --></div>
-                <label class="red-label">MAC Address</label>
-                <div class="red-field" id="disp1-mac"><!-- Cargar datos aquí --></div>
-                <label class="red-label">Tipo</label>
-                <div class="red-field" id="disp1-tipo"><!-- Cargar datos aquí --></div>
-            </section>
-            <section class="red-card" data-dispositivo="2">
-                <h2 class="red-card-title">Dispositivo 2</h2>
-                <label class="red-label">IP Address</label>
-                <div class="red-field" id="disp2-ip"><!-- Cargar datos aquí --></div>
-                <label class="red-label">MAC Address</label>
-                <div class="red-field" id="disp2-mac"><!-- Cargar datos aquí --></div>
-                <label class="red-label">Tipo</label>
-                <div class="red-field" id="disp2-tipo"><!-- Cargar datos aquí --></div>
-            </section>
-            <section class="red-card" data-dispositivo="3">
-                <h2 class="red-card-title">Dispositivo 3</h2>
-                <label class="red-label">IP Address</label>
-                <div class="red-field" id="disp3-ip"><!-- Cargar datos aquí --></div>
-                <label class="red-label">MAC Address</label>
-                <div class="red-field" id="disp3-mac"><!-- Cargar datos aquí --></div>
-                <label class="red-label">Tipo</label>
-                <div class="red-field" id="disp3-tipo"><!-- Cargar datos aquí --></div>
-            </section>
-            <section class="red-card" data-dispositivo="4">
-                <h2 class="red-card-title">Dispositivo 4</h2>
-                <label class="red-label">IP Address</label>
-                <div class="red-field" id="disp4-ip"><!-- Cargar datos aquí --></div>
-                <label class="red-label">MAC Address</label>
-                <div class="red-field" id="disp4-mac"><!-- Cargar datos aquí --></div>
-                <label class="red-label">Tipo</label>
-                <div class="red-field" id="disp4-tipo"><!-- Cargar datos aquí --></div>
-            </section>
-        </div>
-    </main>
+        {% if devices %}
+            {% for device in devices %}
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ device.name_mic }}</h5>
 
-    <script src="panel-common.js"></script>
-</body>
+                        <p><strong>IP:</strong> {{ device.ip_add }}</p>
+                        <p><strong>MAC:</strong> {{ device.mac_add }}</p>
 
-</html>
+                        <p>
+                            <strong>Status:</strong>
+                            <span class="badge bg-success">Activo</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="col-12">
+                <div class="alert alert-warning text-center">
+                    No devices registered for your organization.
+                </div>
+            </div>
+        {% endif %}
+
+    </div>
+</div>
+{% endblock %}

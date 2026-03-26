@@ -129,5 +129,17 @@ def reportes(request):
 def user_info(request):
     return render(request, "user_info.html")
 
-def net_info(request):
-    return render(request, "net_info.html")
+def net_info_view(request):
+    try:
+        usuario = Usuario.objects.get(user=request.user)
+        org = usuario.org
+
+        devices = Microcontrolador.objects.filter(org=org)
+
+    except Usuario.DoesNotExist:
+        devices = []
+
+    context = {
+        "devices": devices
+    }
+    return render(request, "net_info.html", context)

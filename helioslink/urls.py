@@ -35,5 +35,5 @@ urlpatterns = [
     path('graf-hist/', views.graf_hist_view, name='graf_hist'),
     path('reportes/', views.reportes, name='reportes'),
     path('user-info/', views.user_info, name='user_info'),
-    path('net-info/', views.net_info, name='net_info'),
+    path('net-info/', views.net_info_view, name='net_info'),
 ]
