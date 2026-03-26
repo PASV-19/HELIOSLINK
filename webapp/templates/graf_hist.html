@@ -1,75 +1,72 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="es">
+{% extends "base.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gráficas Históricas - HELIOSLINK</title>
-    <link rel="stylesheet" href="{% static 'css/base_styles.css' %}">
-    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
-</head>
+{% block title %}Gráficas históricas{% endblock %}
 
-<body class="panel-body">
-    {% include "navbar.html" %}
-
-    <!-- CONTENIDO PRINCIPAL -->
-    <main class="historicas-main">
-        <!-- Panel superior: Tiempo de Exposición Diario -->
-        <section class="historica-panel historica-panel--full">
-            <h2 class="historica-panel-title">Tiempo de Exposición Diario</h2>
-            <div class="historica-axes">
-                <span class="historica-axis-y">hrs</span>
-                <div class="historica-chart-area" id="chartExposicionDiario" data-chart="exposicion-diario">
-                    <!-- Espacio para cargar gráfica después -->
-                </div>
-                <div class="historica-axis-x">
-                    <span>Lunes</span>
-                    <span>Martes</span>
-                    <span>Miércoles</span>
-                    <span>Jueves</span>
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        
+        <div class="col-md-6">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Producción y Consumo Actual</h5>
+                    <canvas id="chartProduccionConsumo"></canvas>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <!-- Panel inferior izquierdo: Producción y Consumo -->
-        <section class="historica-panel">
-            <h2 class="historica-panel-title">Producción y Consumo</h2>
-            <div class="historica-axes">
-                <span class="historica-axis-y">Watts</span>
-                <div class="historica-chart-area" id="chartProduccionConsumo" data-chart="produccion-consumo">
-                    <!-- Espacio para cargar gráfica después -->
-                </div>
-                <div class="historica-axis-x">
-                    <span>6am</span>
-                    <span>7am</span>
-                    <span>8am</span>
-                    <span>9am</span>
-                    <span>10am</span>
-                    <span>11am</span>
+        <div class="col-md-6">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Producción y Consumo diario</h5>
+                    <canvas id="chartProduccionConsumoDiario"></canvas>
                 </div>
             </div>
-        </section>
+        </div>
 
-        <!-- Panel inferior derecho: Producción y Consumo Diario -->
-        <section class="historica-panel">
-            <h2 class="historica-panel-title">Producción y Consumo Diario</h2>
-            <div class="historica-axes">
-                <span class="historica-axis-y">Watts</span>
-                <div class="historica-chart-area" id="chartProduccionConsumoDiario" data-chart="produccion-consumo-diario">
-                    <!-- Espacio para cargar gráfica después -->
-                </div>
-                <div class="historica-axis-x">
-                    <span>Lunes</span>
-                    <span>Martes</span>
-                    <span>Miércoles</span>
-                    <span>Jueves</span>
-                </div>
-            </div>
-        </section>
-    </main>
+    </div>
+</div>
+{% endblock %}
 
-    <script src="panel-common.js"></script>
-</body>
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-</html>
+{{ current_day|json_script:"current-data" }}
+{{ daily|json_script:"daily-data" }}
+
+<script>
+const current = JSON.parse(document.getElementById('current-data').textContent); || {
+    labels: [],
+    production: [],
+    consumption: []
+};
+
+const daily = JSON.parse(document.getElementById('daily-data').textContent); || {
+    labels: [],
+    production: [],
+    consumption: []
+};
+
+new Chart(document.getElementById('chartProduccionConsumo'), {
+    type: 'line',
+    data: {
+        labels: current.labels,
+        datasets: [
+            { label: 'Producción', data: current.production },
+            { label: 'Consumo', data: current.consumption }
+        ]
+    }
+});
+
+new Chart(document.getElementById('chartProduccionConsumoDiario'), {
+    type: 'bar',
+    data: {
+        labels: daily.labels,
+        datasets: [
+            { label: 'Producción', data: daily.production },
+            { label: 'Consumo', data: daily.consumption }
+        ]
+    }
+});
+</script>
+{% endblock %}

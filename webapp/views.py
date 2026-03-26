@@ -7,10 +7,14 @@ from django.contrib import messages
 
 from .models import Organizacion, Usuario #Import ORM for registration
 from .services import (
+    #Import for graf_info
     get_latest_angle,
     get_today_production_records,
     calculate_current_exposure,
-    get_daily_exposure_history
+    get_daily_exposure_history,
+    #Import for graf_hist
+    get_current_day_energy,
+    get_daily_energy,
 )
 
 # Create your views here.
@@ -107,8 +111,17 @@ def graf_info_view(request):
 
     return render(request, "graf_info.html", context)
 
-def graf_hist(request):
-    return render(request, "graf_hist.html")
+def graf_hist_view(request):
+    current_day = get_current_day_energy()
+    daily = get_daily_energy()
+    exposure = get_daily_exposure_history()
+
+    context = {
+        "current_day": current_day,
+        "daily": daily,
+        "exposure": exposure
+    }
+    return render(request, "graf_hist.html", context)
 
 def reportes(request):
     return render(request, "reportes.html")
