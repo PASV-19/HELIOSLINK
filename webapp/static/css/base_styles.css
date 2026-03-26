@@ -96,3 +96,11 @@ main {
 .form-section select {
     margin-bottom: 15px;
 }
+
+.card {
+    border-radius: 10px;
+}
+
+.card-body h4 {
+    font-weight: 600;
+}

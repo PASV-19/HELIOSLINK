@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block title %}Información de Usuario{% endblock %}
+
+{% block content %}
+
+<!-- Messages -->
+{% if messages %}
+    <div class="row mb-3">
+        <div class="col">
+            {% for message in messages %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endif %}
+
+<div class="row">
+
+    <!-- LEFT: User Info -->
+    <div class="col-md-4 mb-4">
+        <div class="card shadow-sm">
+            <div class="card-body text-center">
+
+                <h4 class="mb-3">{{ request.user.username }}</h4>
+
+                <p class="text-muted mb-1">
+                    <strong>Email:</strong><br>
+                    {{ request.user.email }}
+                </p>
+
+                <hr>
+
+                <p class="mb-1">
+                    <strong>Organization</strong>
+                </p>
+                <p class="text-muted">
+                    {{ usuario.org.name_org }}
+                </p>
+
+                <p class="mb-1">
+                    <strong>Status</strong>
+                </p>
+
+                {% if usuario.status_usr %}
+                    <span class="badge bg-success">Active</span>
+                {% else %}
+                    <span class="badge bg-danger">Inactive</span>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+
+    <!-- RIGHT: Form -->
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-body">
+
+                <h5 class="mb-4">Update Information</h5>
+
+                <form method="POST">
+                    {% csrf_token %}
+
+                    <!-- Username -->
+                    <div class="mb-3">
+                        <label class="form-label">Username</label>
+                        {{ form.username }}
+                        {% if form.username.errors %}
+                            <div class="text-danger small">
+                                {{ form.username.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Email -->
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        {{ form.email }}
+                        {% if form.email.errors %}
+                            <div class="text-danger small">
+                                {{ form.email.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <hr>
+
+                    <h6 class="mb-3">Change Password (Optional)</h6>
+
+                    <!-- Password -->
+                    <div class="mb-3">
+                        <label class="form-label">New Password</label>
+                        {{ form.password }}
+                    </div>
+
+                    <!-- Confirm Password -->
+                    <div class="mb-3">
+                        <label class="form-label">Confirm Password</label>
+                        {{ form.confirm_password }}
+                    </div>
+
+                    {% if form.non_field_errors %}
+                        <div class="text-danger mb-3">
+                            {{ form.non_field_errors }}
+                        </div>
+                    {% endif %}
+
+                    <!-- Submit -->
+                    <div class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-primary">
+                            Update Profile
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

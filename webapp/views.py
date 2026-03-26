@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.db import transaction
 from django.contrib import messages
 
-from .models import Organizacion, Usuario, Microcontrolador #Import ORM for registration
+from .models import Organizacion, Usuario, Microcontrolador, Usuario #Import ORM for registration
 from .services import (
     #Import for graf_info
     get_latest_angle,
@@ -16,6 +16,7 @@ from .services import (
     get_current_day_energy,
     get_daily_energy,
 )
+from .forms import UserUpdateForm
 
 # Create your views here.
 
@@ -126,8 +127,49 @@ def graf_hist_view(request):
 def reportes(request):
     return render(request, "reportes.html")
 
-def user_info(request):
-    return render(request, "user_info.html")
+def user_info_view(request):
+    user = request.user
+    usuario = Usuario.objects.get(user=user)
+
+    if request.method == "POST":
+        form = UserUpdateForm(request.POST)
+
+        if form.is_valid():
+            username = form.cleaned_data["username"]
+            email = form.cleaned_data["email"]
+            password = form.cleaned_data["password"]
+
+            # Update username & email
+            user.username = username
+            user.email = email
+
+            # Update password if provided
+            if password:
+                user.set_password(password)
+
+            user.save()
+
+            messages.success(request, "Profile updated successfully")
+
+            # Important: re-login after password change
+            if password:
+                from django.contrib.auth import update_session_auth_hash
+                update_session_auth_hash(request, user)
+
+            return redirect("user_info")
+
+    else:
+        form = UserUpdateForm(initial={
+            "username": user.username,
+            "email": user.email
+        })
+
+    context = {
+        "form": form,
+        "usuario": usuario
+    }
+
+    return render(request, "user_info.html", context)
 
 def net_info_view(request):
     try:
