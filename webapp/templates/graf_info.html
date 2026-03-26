@@ -9,9 +9,20 @@
         <div class="col-md-4">
             <div class="card text-center">
                 <div class="card-body">
-                    <h3>°</h3>
-                    <p></p>
-                    <span class="badge bg-success"></span>
+                    <h3>Angulo de los Paneles</h3>
+                    <span class="info-card-value">{{ angle|default:"--" }}°</span>
+                </div>
+            </div>
+            <div class="card text-center">
+                <div class="card-body">
+                    <h3>Tiempo de exposición actual</h3>
+                    <span class="info-card-value">{{ current_exposure|default:"00:00:00" }}</span>
+                    <span class="card-badge
+                        {% if status == 'charging' %}bg-success
+                        {% else %}bg-secondary
+                        {% endif %}">
+                        {{ status }}
+                    </span>
                 </div>
             </div>
         </div>
@@ -19,9 +30,8 @@
         <div class="col-md-8">
             <div class="card text-center">
                 <div class="card-body">
-                    <h3></h3>
-                    <p></p>
-                    <canvas id="dailyExposureChart"></canvas>
+                    <h3>Tiempo de exposición total diario</h3>
+                    <canvas id="exposureChart"></canvas>
                 </div>
             </div>
         </div>
@@ -31,4 +41,24 @@
 {% endblock %}
 
 {% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+const data = {{ history|safe }};
+
+const labels = data.map(item => item.day);
+const values = data.map(item => item.hours);
+
+const ctx = document.getElementById('exposureChart');
+
+new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: labels,
+        datasets: [{
+            label: 'Horas de exposición',
+            data: values
+        }]
+    }
+});
+</script>
 {% endblock %}

@@ -31,7 +31,7 @@ urlpatterns = [
     path('dashboard', views.dashboard, name='dashboard'),
 
     #Informative pages / non real-time data
-    path('graf-info/', views.graf_info, name='graf_info'),
+    path('graf-info/', views.graf_info_view, name='graf_info'),
     path('graf-hist/', views.graf_hist, name='graf_hist'),
     path('reportes/', views.reportes, name='reportes'),
     path('user-info/', views.user_info, name='user_info'),

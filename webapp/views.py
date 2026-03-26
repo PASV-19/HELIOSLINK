@@ -6,6 +6,12 @@ from django.db import transaction
 from django.contrib import messages
 
 from .models import Organizacion, Usuario #Import ORM for registration
+from .services import (
+    get_latest_angle,
+    get_today_production_records,
+    calculate_current_exposure,
+    get_daily_exposure_history
+)
 
 # Create your views here.
 
@@ -83,8 +89,23 @@ def dashboard(request):
     return render(request, "dashboard.html")
 
 ## Non real-time related / informative pages
-def graf_info(request):
-    return render(request, "graf_info.html")
+def graf_info_view(request):
+    angle = get_latest_angle()
+
+    today_records = get_today_production_records()
+
+    current_exposure = calculate_current_exposure(today_records)
+
+    history = get_daily_exposure_history()
+
+    context = {
+        "angle": angle,
+        "current_exposure": current_exposure,
+        "history": history,
+        "status": "charging" if angle else "idle"
+    }
+
+    return render(request, "graf_info.html", context)
 
 def graf_hist(request):
     return render(request, "graf_hist.html")
