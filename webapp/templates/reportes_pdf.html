@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Arial;
+            font-size: 12px;
+        }
+
+        h2 {
+            border-bottom: 1px solid #000;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+
+        th, td {
+            border: 1px solid #000;
+            padding: 5px;
+            text-align: left;
+        }
+
+        img {
+            width: 100%;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Reporte del Sistema</h1>
+
+    <!-- =========================
+         ORGANIZATION
+    ========================== -->
+    <h2>Organización</h2>
+    <p><strong>Nombre:</strong> {{ organization.name }}</p>
+    <p><strong>Ubicación:</strong> {{ organization.location }}</p>
+    <p><strong>Teléfono:</strong> {{ organization.phone }}</p>
+
+    <!-- =========================
+         USER
+    ========================== -->
+    <h2>Usuario</h2>
+    <p><strong>Usuario:</strong> {{ user.username }}</p>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+
+    <!-- =========================
+         DATE
+    ========================== -->
+    <h2>Fecha del reporte</h2>
+    <p>{{ generated_at }}</p>
+
+    <!-- =========================
+         NETWORK
+    ========================== -->
+    {% if include_network %}
+        <h2>Resumen de red</h2>
+
+        {% if presentation == "tables" %}
+            <p>Total dispositivos: {{ network.total_devices }}</p>
+
+            <table>
+                <tr>
+                    <th>Nombre</th>
+                    <th>IP</th>
+                    <th>MAC</th>
+                </tr>
+
+                {% for d in network.devices %}
+                <tr>
+                    <td>{{ d.name }}</td>
+                    <td>{{ d.ip }}</td>
+                    <td>{{ d.mac }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+
+        {% else %}
+            <img src="data:image/png;base64,{{ network_chart }}">
+        {% endif %}
+    {% endif %}
+
+    <!-- =========================
+         HISTORY
+    ========================== -->
+    {% if include_history %}
+        <h2>Datos históricos</h2>
+
+        {% if presentation == "tables" %}
+            <table>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Horas</th>
+                </tr>
+
+                {% for h in history %}
+                <tr>
+                    <td>{{ h.day }}</td>
+                    <td>{{ h.hours }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+
+        {% else %}
+            <img src="data:image/png;base64,{{ history_chart }}">
+        {% endif %}
+    {% endif %}
+
+</body>
+</html>

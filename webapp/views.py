@@ -16,7 +16,14 @@ from .services import (
     #Import for graf_hist
     get_current_day_energy,
     get_daily_energy,
+    #Import for reportes
+    build_report_context,
 )
+##Imports for Reportes
+from django.template.loader import render_to_string
+from django.http import HttpResponse
+from datetime import datetime
+from weasyprint import HTML
 
 # Create your views here.
 
@@ -124,8 +131,64 @@ def graf_hist_view(request):
     }
     return render(request, "graf_hist.html", context)
 
-def reportes(request):
+def reportes_view(request):
     return render(request, "reportes.html")
+
+def generar_pdf(request):
+    if request.method != "POST":
+        return redirect("reportes")
+
+    # =========================
+    # OPTIONS FROM FORM
+    # =========================
+    include_network = "include_network" in request.POST
+    include_history = "include_history" in request.POST
+    presentation = request.POST.get("presentation", "tables")
+
+    start_date = request.POST.get("start_date")
+    end_date = request.POST.get("end_date")
+
+    # =========================
+    # VALIDATION
+    # =========================
+    if include_history:
+        if not start_date or not end_date:
+            return HttpResponse("Error: Debes seleccionar fechas", status=400)
+
+        start_date = datetime.strptime(start_date, "%Y-%m-%d").date()
+        end_date = datetime.strptime(end_date, "%Y-%m-%d").date()
+
+        if (end_date - start_date).days > 14:
+            return HttpResponse("Error: Máximo 2 semanas de rango", status=400)
+
+    else:
+        start_date = None
+        end_date = None
+
+    # =========================
+    # BUILD CONTEXT
+    # =========================
+    options = {
+        "include_network": include_network,
+        "include_history": include_history,
+        "presentation": presentation,
+        "start_date": start_date,
+        "end_date": end_date
+    }
+
+    context = build_report_context(request.user, options)
+
+    # =========================
+    # RENDER PDF
+    # =========================
+    html_string = render_to_string("reportes_pdf.html", context)
+
+    pdf = HTML(string=html_string).write_pdf()
+
+    response = HttpResponse(pdf, content_type="application/pdf")
+    response["Content-Disposition"] = 'inline; filename="reporte.pdf"'
+
+    return response
 
 def user_info_view(request):
     user = request.user

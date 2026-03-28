@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block title %}Reportes{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+
+    <div class="card p-4">
+        <h4 class="mb-3">Generar Reporte</h4>
+
+        <form method="POST" action="{% url 'generar_pdf' %}">
+            {% csrf_token %}
+
+            <!-- =========================
+                 DATA SELECTION
+            ========================== -->
+            <h5>Contenido del reporte</h5>
+
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" name="include_network" id="include_network">
+                <label class="form-check-label" for="include_network">
+                    Resumen de red
+                </label>
+            </div>
+
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" name="include_history" id="include_history" onchange="toggleDateInputs()">
+                <label class="form-check-label" for="include_history">
+                    Datos históricos
+                </label>
+            </div>
+
+            <!-- Date Range -->
+            <div id="date-range" style="display:none;">
+                <div class="mb-2">
+                    <label>Fecha inicio</label>
+                    <input type="date" name="start_date" class="form-control">
+                </div>
+
+                <div class="mb-3">
+                    <label>Fecha fin</label>
+                    <input type="date" name="end_date" class="form-control">
+                </div>
+            </div>
+
+            <!-- =========================
+                 PRESENTATION MODE
+            ========================== -->
+            <h5>Formato de visualización</h5>
+
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="presentation" value="tables" checked>
+                <label class="form-check-label">
+                    Datos estructurados (tablas)
+                </label>
+            </div>
+
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="radio" name="presentation" value="charts">
+                <label class="form-check-label">
+                    Gráficas
+                </label>
+            </div>
+
+            <!-- Submit -->
+            <button type="submit" class="btn btn-primary">
+                Generar PDF
+            </button>
+
+        </form>
+    </div>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function toggleDateInputs() {
+    const checkbox = document.getElementById("include_history");
+    const dateDiv = document.getElementById("date-range");
+
+    dateDiv.style.display = checkbox.checked ? "block" : "none";
+}
+</script>
+{% endblock %}
