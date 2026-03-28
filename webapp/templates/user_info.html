@@ -1,124 +1,74 @@
 {% extends "base.html" %}
 
-{% block title %}Información de Usuario{% endblock %}
+{% block title %}Información del Usuario{% endblock %}
 
 {% block content %}
+<div class="container mt-4">
 
-<!-- Messages -->
-{% if messages %}
-    <div class="row mb-3">
-        <div class="col">
-            {% for message in messages %}
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                </div>
-            {% endfor %}
+    <!-- ORGANIZATION INFO -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5>Organización</h5>
+        </div>
+        <div class="card-body">
+            <p><strong>Nombre:</strong> {{ org.name_org }}</p>
+            <p><strong>Ubicación:</strong> {{ org.ubica_org }}</p>
+            <p><strong>Teléfono:</strong> {{ org.tel }}</p>
         </div>
     </div>
-{% endif %}
 
-<div class="row">
-
-    <!-- LEFT: User Info -->
-    <div class="col-md-4 mb-4">
-        <div class="card shadow-sm">
-            <div class="card-body text-center">
-
-                <h4 class="mb-3">{{ request.user.username }}</h4>
-
-                <p class="text-muted mb-1">
-                    <strong>Email:</strong><br>
-                    {{ request.user.email }}
-                </p>
-
-                <hr>
-
-                <p class="mb-1">
-                    <strong>Organization</strong>
-                </p>
-                <p class="text-muted">
-                    {{ usuario.org.name_org }}
-                </p>
-
-                <p class="mb-1">
-                    <strong>Status</strong>
-                </p>
-
+    <!-- USER INFO -->
+    <div class="card mb-4">
+        <div class="card-header">
+            <h5>Información del Usuario</h5>
+        </div>
+        <div class="card-body">
+            <p><strong>Usuario:</strong> {{ user.username }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p>
+                <strong>Estado:</strong> 
                 {% if usuario.status_usr %}
-                    <span class="badge bg-success">Active</span>
+                    <span class="badge bg-success">Activo</span>
                 {% else %}
-                    <span class="badge bg-danger">Inactive</span>
+                    <span class="badge bg-danger">Inactivo</span>
                 {% endif %}
-
-            </div>
+            </p>
         </div>
     </div>
 
-    <!-- RIGHT: Form -->
-    <div class="col-md-8">
-        <div class="card shadow-sm">
-            <div class="card-body">
+    <!-- UPDATE FORM -->
+    <div class="card">
+        <div class="card-header">
+            <h5>Actualizar Datos</h5>
+        </div>
+        <div class="card-body">
 
-                <h5 class="mb-4">Update Information</h5>
+            {% if success %}
+                <div class="alert alert-success">{{ success }}</div>
+            {% endif %}
 
-                <form method="POST">
-                    {% csrf_token %}
+            {% if error %}
+                <div class="alert alert-danger">{{ error }}</div>
+            {% endif %}
 
-                    <!-- Username -->
-                    <div class="mb-3">
-                        <label class="form-label">Username</label>
-                        {{ form.username }}
-                        {% if form.username.errors %}
-                            <div class="text-danger small">
-                                {{ form.username.errors }}
-                            </div>
-                        {% endif %}
-                    </div>
+            <form method="POST">
+                {% csrf_token %}
 
-                    <!-- Email -->
-                    <div class="mb-3">
-                        <label class="form-label">Email</label>
-                        {{ form.email }}
-                        {% if form.email.errors %}
-                            <div class="text-danger small">
-                                {{ form.email.errors }}
-                            </div>
-                        {% endif %}
-                    </div>
+                <div class="mb-3">
+                    <label class="form-label">Nuevo Email</label>
+                    <input type="email" name="email" class="form-control" placeholder="Nuevo email">
+                </div>
 
-                    <hr>
+                <div class="mb-3">
+                    <label class="form-label">Nueva Contraseña</label>
+                    <input type="password" name="password" class="form-control" placeholder="Nueva contraseña">
+                </div>
 
-                    <h6 class="mb-3">Change Password (Optional)</h6>
+                <button type="submit" class="btn btn-primary">
+                    Actualizar
+                </button>
+            </form>
 
-                    <!-- Password -->
-                    <div class="mb-3">
-                        <label class="form-label">New Password</label>
-                        {{ form.password }}
-                    </div>
-
-                    <!-- Confirm Password -->
-                    <div class="mb-3">
-                        <label class="form-label">Confirm Password</label>
-                        {{ form.confirm_password }}
-                    </div>
-
-                    {% if form.non_field_errors %}
-                        <div class="text-danger mb-3">
-                            {{ form.non_field_errors }}
-                        </div>
-                    {% endif %}
-
-                    <!-- Submit -->
-                    <div class="d-flex justify-content-end">
-                        <button type="submit" class="btn btn-primary">
-                            Update Profile
-                        </button>
-                    </div>
-
-                </form>
-
-            </div>
         </div>
     </div>
 

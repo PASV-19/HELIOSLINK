@@ -2,6 +2,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
+from django.contrib.auth.hashers import make_password
 from django.db import transaction
 from django.contrib import messages
 
@@ -16,7 +17,6 @@ from .services import (
     get_current_day_energy,
     get_daily_energy,
 )
-from .forms import UserUpdateForm
 
 # Create your views here.
 
@@ -129,46 +129,40 @@ def reportes(request):
 
 def user_info_view(request):
     user = request.user
-    usuario = Usuario.objects.get(user=user)
 
+    try:
+        usuario = Usuario.objects.get(user=user)
+    except Usuario.DoesNotExist:
+        return render(request, "user_info.html", {
+            "error": "Usuario no encontrado"
+        })
+
+    org = usuario.org
+
+    context = {
+        "user": user,
+        "usuario": usuario,
+        "org": org
+    }
+
+    # POST: Update user data
     if request.method == "POST":
-        form = UserUpdateForm(request.POST)
+        email = request.POST.get("email")
+        password = request.POST.get("password")
 
-        if form.is_valid():
-            username = form.cleaned_data["username"]
-            email = form.cleaned_data["email"]
-            password = form.cleaned_data["password"]
+        try:
+            if email:
+                user.email = email
 
-            # Update username & email
-            user.username = username
-            user.email = email
-
-            # Update password if provided
             if password:
-                user.set_password(password)
+                user.password = make_password(password)
 
             user.save()
 
-            messages.success(request, "Profile updated successfully")
+            context["success"] = "Datos actualizados correctamente"
 
-            # Important: re-login after password change
-            if password:
-                from django.contrib.auth import update_session_auth_hash
-                update_session_auth_hash(request, user)
-
-            return redirect("user_info")
-
-    else:
-        form = UserUpdateForm(initial={
-            "username": user.username,
-            "email": user.email
-        })
-
-    context = {
-        "form": form,
-        "usuario": usuario
-    }
-
+        except Exception as e:
+            context["error"] = str(e)
     return render(request, "user_info.html", context)
 
 def net_info_view(request):
