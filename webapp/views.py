@@ -114,7 +114,7 @@ def graf_info_view(request):
         "angle": angle,
         "current_exposure": current_exposure,
         "history": history,
-        "status": "charging" if angle else "idle"
+        "status": "charging" if angle is not None else "idle"
     }
 
     return render(request, "graf_info.html", context)

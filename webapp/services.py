@@ -16,24 +16,12 @@ import io
 import base64
 
 # -------------------------
-# SENSOR HELPERS
-# -------------------------
-def get_sensor(sensor_type):
-    return Sensor.objects.filter(type_sen=sensor_type).first()
-
-
-# -------------------------
 # PANEL ANGLE
 # -------------------------
 def get_latest_angle():
-    sensor = get_sensor("angle")
-
-    if not sensor:
-        return None
-
     registro = (
         Registro.objects
-        .filter(sensor=sensor)
+        .filter(type_regis="angle")
         .order_by('-datetime')
         .first()
     )
@@ -45,16 +33,10 @@ def get_latest_angle():
 # PRODUCTION RECORDS
 # -------------------------
 def get_today_production_records():
-    sensor = get_sensor("production")
-
-    if not sensor:
-        return Registro.objects.none()
-
-    return Registro.objects.filter(
-        sensor=sensor,
-        datetime__date=now().date()
-    ).order_by('datetime')
-
+    return get_records_by_type(
+        "production",
+        start_date=now().date()
+    )
 
 # -------------------------
 # CURRENT EXPOSURE
@@ -73,14 +55,9 @@ def calculate_current_exposure(records, threshold=5):
 # DAILY EXPOSURE HISTORY
 # -------------------------
 def get_daily_exposure_history():
-    sensor = get_sensor("production")
-
-    if not sensor:
-        return []
-
     records = (
         Registro.objects
-        .filter(sensor=sensor)
+        .filter(type_regis="production", value__get=threshold)
         .annotate(day=TruncDate('datetime'))
         .values('day')
         .annotate(count=Count('id'))
@@ -98,14 +75,10 @@ def get_daily_exposure_history():
     return result
 
 def get_current_day_energy():
-    prod_sensor = get_sensor("production")
-    cons_sensor = get_sensor("consumption")
+    today = now().date()
 
-    if not prod_sensor or not cons_sensor:
-        return {"labels": [], "production": [], "consumption": []}
-
-    prod_records = Registro.objects.filter(sensor=prod_sensor).order_by('datetime')
-    cons_records = Registro.objects.filter(sensor=cons_sensor).order_by('datetime')
+    prod_records = get_records_by_type("production", start_date=today)
+    cons_records = get_records_by_type("consumption", start_date=today)
 
     labels = [r.datetime.strftime("%H:%M") for r in prod_records]
 
@@ -114,13 +87,11 @@ def get_current_day_energy():
         "production": [r.value for r in prod_records],
         "consumption": [r.value for r in cons_records]
     }
-def get_daily_energy():
-    prod_sensor = get_sensor("production")
-    cons_sensor = get_sensor("consumption")
 
+def get_daily_energy():
     prod = (
         Registro.objects
-        .filter(sensor=prod_sensor)
+        .filter(type_regis="production")
         .annotate(day=TruncDate('datetime'))
         .values('day')
         .annotate(total=Sum('value'))
@@ -129,7 +100,7 @@ def get_daily_energy():
 
     cons = (
         Registro.objects
-        .filter(sensor=cons_sensor)
+        .filter(type_regis="consumption")
         .annotate(day=TruncDate('datetime'))
         .values('day')
         .annotate(total=Sum('value'))
@@ -141,6 +112,7 @@ def get_daily_energy():
         "production": [p["total"] for p in prod],
         "consumption": [c["total"] for c in cons]
     }
+
 ## Reportes logic
 def get_user_organization_data(user):
     try:
@@ -188,16 +160,12 @@ def get_network_summary(user):
     }
 
 def get_historical_data_range(start_date, end_date):
-    sensor = get_sensor("production")
-
-    if not sensor:
-        return []
-
     records = (
         Registro.objects
         .filter(
-            sensor=sensor,
-            datetime__date__range=[start_date, end_date]
+            type_regis="production",
+            datetime__date__range=[start_date, end_date],
+            value__gt=threshold
         )
         .annotate(day=TruncDate('datetime'))
         .values('day')
@@ -272,3 +240,13 @@ def build_report_context(user, options):
     context["presentation"] = options.get("presentation")
 
     return context
+
+def get_records_by_type(type_regis, start_date=None, end_date=None):
+    qs = Registro.objects.filter(type_regis=type_regis)
+
+    if start_date and end_date:
+        qs = qs.filter(datetime__date__range=[start_date, end_date])
+    elif start_date:
+        qs = qs.filter(datetime__date=start_date)
+
+    return qs.order_by('datetime')

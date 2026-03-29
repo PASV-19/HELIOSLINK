@@ -56,8 +56,8 @@ class Sensor(models.Model):
 # REGISTROS
 # =========================
 class Registro(models.Model):
-    value = models.CharField(max_length=100)
-    type_regis = models.FloatField()
+    value = models.FloatField()
+    type_regis = models.CharField(max_length=100)
     anomalia = models.BooleanField(default=False)
     datetime = models.DateTimeField(default=now)
     sensor = models.ForeignKey(Sensor, on_delete=models.CASCADE)
