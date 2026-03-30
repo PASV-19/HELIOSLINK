@@ -54,7 +54,7 @@ def calculate_current_exposure(records, threshold=5):
 # -------------------------
 # DAILY EXPOSURE HISTORY
 # -------------------------
-def get_daily_exposure_history():
+def get_daily_exposure_history(threshold=5):
     records = (
         Registro.objects
         .filter(type_regis="production", value__get=threshold)
@@ -159,7 +159,7 @@ def get_network_summary(user):
         "devices": device_list
     }
 
-def get_historical_data_range(start_date, end_date):
+def get_historical_data_range(start_date, end_date, threshold=5):
     records = (
         Registro.objects
         .filter(
