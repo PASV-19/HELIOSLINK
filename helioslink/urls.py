@@ -18,6 +18,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from webapp import views
+from webapp import api_views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
@@ -37,4 +38,8 @@ urlpatterns = [
     path("reportes/pdf/", views.generar_pdf, name="generar_pdf"),
     path('user-info/', views.user_info_view, name='user_info'),
     path('net-info/', views.net_info_view, name='net_info'),
+
+    # API Endpoints
+    path("api/telemetry/", api_views.api_telemetry_post),
+    path("api/battery/", api_views.api_battery_get),
 ]

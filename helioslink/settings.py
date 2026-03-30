@@ -123,3 +123,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = "static/"
+
+# API related
+API_TOKEN = "Hqq0MrbH8qWpzmd"
+ESP_IP = "0.0.0.0"
+ESP_TIMEOUT = 4 # seconds
+ESP_RETRIES = 3

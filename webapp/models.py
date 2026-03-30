@@ -32,7 +32,7 @@ class Usuario(models.Model):
 class Microcontrolador(models.Model):
     name_mic = models.CharField(max_length=100)
     ip_add = models.GenericIPAddressField()
-    mac_add = models.CharField(max_length=17)
+    mac_add = models.CharField(max_length=17, unique=True)
     org = models.ForeignKey(Organizacion, on_delete=models.CASCADE)
 
     def __str__(self):

@@ -10,7 +10,7 @@ HELIOSLINK
 │       └── settings.cpython-314.pyc
 │
 ├── manage.py
-├── pro_struct_v4.txt
+├── pro_struct_v4.1.txt
 │
 └── webapp
     ├── __init__.py
@@ -21,6 +21,9 @@ HELIOSLINK
     ├── services.py
     ├── tests.py
     ├── views.py
+    │
+    ├── api_views.py
+    ├── api_services.py
     │
     ├── migrations
     │   └── __init__.py
