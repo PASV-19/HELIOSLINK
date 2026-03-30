@@ -35,19 +35,22 @@
 {{ daily|json_script:"daily-data" }}
 
 <script>
-const current = JSON.parse(document.getElementById('current-data').textContent); || {
+const current = JSON.parse(document.getElementById('current-data').textContent) || {
     labels: [],
     production: [],
     consumption: []
 };
 
-const daily = JSON.parse(document.getElementById('daily-data').textContent); || {
+const daily = JSON.parse(document.getElementById('daily-data').textContent) || {
     labels: [],
     production: [],
     consumption: []
 };
 
-new Chart(document.getElementById('chartProduccionConsumo'), {
+const ctx1 = document.getElementById('chartProduccionConsumo').getContext('2d');
+const ctx2 = document.getElementById('chartProduccionConsumoDiario').getContext('2d');
+
+new Chart(ctx1, {
     type: 'line',
     data: {
         labels: current.labels,
@@ -58,7 +61,7 @@ new Chart(document.getElementById('chartProduccionConsumo'), {
     }
 });
 
-new Chart(document.getElementById('chartProduccionConsumoDiario'), {
+new Chart(ctx2, {
     type: 'bar',
     data: {
         labels: daily.labels,
