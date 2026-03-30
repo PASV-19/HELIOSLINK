@@ -57,7 +57,7 @@ def calculate_current_exposure(records, threshold=0):
 def get_daily_exposure_history(threshold=0):
     records = (
         Registro.objects
-        .filter(type_regis="production", value__get=threshold)
+        .filter(type_regis="production", value__gt=threshold)
         .annotate(day=TruncDate('datetime'))
         .values('day')
         .annotate(count=Count('id'))

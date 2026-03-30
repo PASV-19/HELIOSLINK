@@ -25,6 +25,7 @@ from django.http import HttpResponse
 from datetime import datetime
 from weasyprint import HTML
 
+import json
 # Create your views here.
 
 ## Login related: user login, account creation, password reset
@@ -113,7 +114,7 @@ def graf_info_view(request):
     context = {
         "angle": angle,
         "current_exposure": current_exposure,
-        "history": history,
+        "history": json.dumps(history, default=str),
         "status": "charging" if angle is not None else "idle"
     }
 
